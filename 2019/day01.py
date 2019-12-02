@@ -102,16 +102,27 @@ data = '''62371
 93488'''
 
 def calculate_fuel(mass):
-	a = mass / 3
-	b = int(a)
-	c = b - 2
-	return c
+	fuel = (mass // 3) - 2
+	if fuel < 0:
+		fuel = 0
+	return fuel
 
 lines = [int(line) for line in data.splitlines()]
 
-fuel = 0
+total_fuel = 0
 
 for mass in lines:
-	fuel += calculate_fuel(mass)
+	total_fuel += calculate_fuel(mass)
 
-print(fuel)
+print(total_fuel)
+
+total_fuel = 0
+
+for mass in lines:
+	fuel = calculate_fuel(mass)
+	while fuel > 0:
+		total_fuel += fuel
+		fuel = calculate_fuel(fuel)
+
+print(total_fuel)
+
