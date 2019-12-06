@@ -23,11 +23,10 @@ for a in xrange(0, 100):
 		tape[1] = a
 		tape[2] = b
 
-		index = 0
+		instruction = 0
 		run = True
 		while run:
-			run, step = opcode.run_opcode(tape, index)
-			index += step
+			run, instruction = opcode.run_opcode(tape, instruction)
 
 		if tape[0] == 19690720:
 			result = 100 * a + b

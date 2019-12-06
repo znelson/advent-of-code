@@ -25,52 +25,84 @@ class Opcode:
 		self.mode3 = OpcodeMode.POSITION if cmd[0] == '0' else OpcodeMode.IMMEDIATE
 
 		self.output = None
-		self.step = 0
+		self.instruction = index
 		self.run = True
 		if self.mode3 == OpcodeMode.IMMEDIATE:
 			print('OpcodeMode.IMMEDIATE for parameter 3! {0}'.format(cmd))
 			exit()
 
-	def execute(self, tape, index, inputs):
+	def execute(self, tape, inputs):
 		# print(self.opcode)
 		if self.opcode == 1 or self.opcode == 2:
-			self.step = 4
-			p1 = tape[tape[index+1]] if self.mode1 == OpcodeMode.POSITION else tape[index+1]
-			p2 = tape[tape[index+2]] if self.mode2 == OpcodeMode.POSITION else tape[index+2]
+			# addition p1+p2 or multiplication p1*p2 to p3 (always POSITION)
+			p1 = tape[tape[self.instruction+1]] if self.mode1 == OpcodeMode.POSITION else tape[self.instruction+1]
+			p2 = tape[tape[self.instruction+2]] if self.mode2 == OpcodeMode.POSITION else tape[self.instruction+2]
 			if self.opcode == 1:
 				result = p1+p2
 			elif self.opcode == 2:
 				result = p1*p2
-			tape[tape[index+3]] = result
+			tape[tape[self.instruction+3]] = result
+			self.instruction += 4
+
 		elif self.opcode == 3:
-			self.step = 2
-			tape[tape[index+1]] = inputs[0]
+			# read input to p1 (always POSITION)
+			tape[tape[self.instruction+1]] = inputs[0]
 			inputs = inputs[1:]
+			self.instruction += 2
+
 		elif self.opcode == 4:
-			self.step = 2
-			self.output = tape[tape[index+1]] if self.mode1 == OpcodeMode.POSITION else tape[index+1]
+			# write p1 to output (always POSITION)
+			self.output = tape[tape[self.instruction+1]] if self.mode1 == OpcodeMode.POSITION else tape[self.instruction+1]
+			self.instruction += 2
+
+		elif self.opcode == 5 or self.opcode == 6:
+			# 5: jump-if-true, if p1 is non-zero jump to p2
+			# 6: jump-if-false, if p1 is zero jump to p2
+			p1 = tape[tape[self.instruction+1]] if self.mode1 == OpcodeMode.POSITION else tape[self.instruction+1]
+			p2 = tape[tape[self.instruction+2]] if self.mode2 == OpcodeMode.POSITION else tape[self.instruction+2]
+			if self.opcode == 5 and p1 != 0:
+				self.instruction = p2
+			elif self.opcode == 6 and p1 == 0:
+				self.instruction = p2
+			else:
+				self.instruction += 3
+
+		elif self.opcode == 7 or self.opcode == 8:
+			# 7: less-than, if p1 is less than p2, store 1 to p3, otherwise store 0
+			# 8: equals, if p1 is equal to p2, store 1 to p3, otherwise store 0
+			p1 = tape[tape[self.instruction+1]] if self.mode1 == OpcodeMode.POSITION else tape[self.instruction+1]
+			p2 = tape[tape[self.instruction+2]] if self.mode2 == OpcodeMode.POSITION else tape[self.instruction+2]
+			result = 0
+			if self.opcode == 7 and p1 < p2:
+				result = 1
+			elif self.opcode == 8 and p1 == p2:
+				result = 1
+			tape[tape[self.instruction+3]] = result
+			self.instruction += 4
+
 		elif self.opcode == 99:
 			self.run = False
+
 		else:
 			print('Unexpected opcode {0}'.format(self.opcode))
-			print(tape, index)
+			print(tape, self.instruction)
 			exit()
 
 
-def run_opcode(tape, index, inputs=[]):
-	opcode = Opcode(tape, index)
-	opcode.execute(tape, index, inputs)
-	return opcode.run, opcode.step
+def run_opcode(tape, instruction, inputs=[]):
+	opcode = Opcode(tape, instruction)
+	opcode.execute(tape, inputs)
+	return opcode.run, opcode.instruction
 
 def run_opcodes(tape, inputs=[]):
 	outputs = []
-	index = 0
+	instruction = 0
 	run = True
 	while run:
-		opcode = Opcode(tape, index)
-		opcode.execute(tape, index, inputs)
+		opcode = Opcode(tape, instruction)
+		opcode.execute(tape, inputs)
 		run = opcode.run
-		index += opcode.step
+		instruction = opcode.instruction
 		if opcode.output:
 			outputs.append(opcode.output)
 	return outputs
