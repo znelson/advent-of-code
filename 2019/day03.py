@@ -22,10 +22,10 @@ test_data = [
 ]
 
 test_results = [
-	6,
-	159,
-	135,
-	0
+	[6, 30],
+	[159, 610],
+	[135, 410],
+	[557, 56410]
 ]
 
 class WireDirection(enum.Enum):
@@ -97,43 +97,52 @@ class Wire:
 	def __repr__(self):
 		return '<Wire {0}>'.format(self.route)
 
-def manhattan_distance(p1, p2):
-	return abs(p1.x - p2.x) + abs(p1.y - p2.y)
+def manhattan_distance(reference, intersection, positions):
+	return abs(reference.x - intersection.x) + abs(reference.y - intersection.y)
+
+def cumulative_distance(reference, intersection, positions):
+	distance = 0
+	for position_list in positions:
+		for position in position_list:
+			distance += 1
+			if position == intersection:
+				break
+	return distance
 
 class Canvas:
 	def __init__(self):
+		self._start_point = Point(0, 0)
 		self.wire_positions = []
 
-	def install_segment(self, position, segment):
+	def install_segment(self, segment):
 		offset = Offset(segment.direction)
-		p = Point(position.x, position.y)
+		start_point = self._start_point if len(self.wire_positions[-1]) == 0 else self.wire_positions[-1][-1]
+		p = Point(start_point.x, start_point.y)
 		for i in range(segment.distance):
 			p = Point(p.x, p.y, offset)
-			self.wire_positions[-1].add(p)
-		return p
+			self.wire_positions[-1].append(p)
 	
 	def install_wire(self, wire):
-		position = Point(0, 0)
-		self.wire_positions.append(set())
+		self.wire_positions.append([])
 		for segment in wire.route:
-			position = self.install_segment(position, segment)
+			self.install_segment(segment)
 
 	def list_intersections(self):
 		if len(self.wire_positions) < 2:
 			return set()
-		intersections = self.wire_positions[0] & self.wire_positions[1]
+		intersections = set(self.wire_positions[0]) & set(self.wire_positions[1])
 		for i in range(2, len(self.wire_positions)):
-			intersections &= self.wire_positions[i]
+			intersections &= set(self.wire_positions[i])
 		return intersections
 
-	def nearest_intersection(self, point):
+	def nearest_intersection(self, distance_fn):
 		intersections = self.list_intersections()
 		if len(intersections) == 0:
-			return 0, point
+			return 0, self._start_point
 		min_distance = None
 		min_distance_point = None
 		for intersection in intersections:
-			distance = manhattan_distance(point, intersection)
+			distance = distance_fn(self._start_point, intersection, self.wire_positions)
 			if not min_distance or distance < min_distance:
 				min_distance = distance
 				min_distance_point = intersection
@@ -149,6 +158,11 @@ for i in range(len(test_data)):
 	canvas = Canvas()
 	canvas.install_wire(w1)
 	canvas.install_wire(w2)
-	distance, point = canvas.nearest_intersection(Point(0, 0))
+
+	distance, point = canvas.nearest_intersection(manhattan_distance)
 	print(distance, point)
-	print('Test {0}: Expected {1}, found {2}'.format(i, test_results[i], distance))
+	print('Test {0} A: Expected {1}, found {2}'.format(i, test_results[i][0], distance))
+
+	distance, point = canvas.nearest_intersection(cumulative_distance)
+	print(distance, point)
+	print('Test {0} B: Expected {1}, found {2}'.format(i, test_results[i][1], distance))
