@@ -16,6 +16,29 @@ layer_data = []
 fewest_zero_pixels = len(data)
 select_layer_data = {}
 
+class LayeredImage:
+	def __init__(self):
+		self.data = []
+	def add_layer(self, layer):
+		for i in range(len(layer)):
+			if len(self.data) <= i:
+				self.data.append(int(layer[i]))
+			elif self.data[i] == 2:
+				self.data[i] = int(layer[i])
+	def dump(self, width, height):
+		for row in range(height):
+			i = row * width
+			line = ''
+			for j in range(width):
+				c = self.data[i+j]
+				if c == 0:
+					line += 'X'
+				elif c == 1:
+					line += '-'
+				else:
+					line += ' '
+			print(line)
+
 for layer in range(layer_count):
 	layer_data.append({
 			'0': 0,
@@ -32,3 +55,18 @@ for layer in range(layer_count):
 
 print(select_layer_data['1'] * select_layer_data['2'])
 
+image = LayeredImage()
+
+for layer in range(layer_count):
+	i = layer * pixels_per_layer
+	image.add_layer(data[i:i+pixels_per_layer])
+image.dump(width, height)
+
+# -XX-X-XXX--XX-X----X----X
+# -X-XX-XXX--XX-X-XXXX-XXXX
+# --XXXX-X-X----X---XX---XX
+# -X-XXXX-XX-XX-X-XXXX-XXXX
+# -X-XXXX-XX-XX-X-XXXX-XXXX
+# -XX-XXX-XX-XX-X-XXXX----X
+
+# KYHFE
