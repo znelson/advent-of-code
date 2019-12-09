@@ -46,13 +46,15 @@ class Opcode:
 
 		elif self.opcode == 3:
 			# read input to p1 (always POSITION)
-			tape[tape[self.instruction+1]] = inputs[0]
-			inputs = inputs[1:]
+			value = inputs.pop(0)
+			tape[tape[self.instruction+1]] = value
+			#print('Consumed input {0}, remaining: {1}'.format(value, inputs))
 			self.instruction += 2
 
 		elif self.opcode == 4:
 			# write p1 to output (always POSITION)
 			self.output = tape[tape[self.instruction+1]] if self.mode1 == OpcodeMode.POSITION else tape[self.instruction+1]
+			#print('Produced output {0}'.format(self.output))
 			self.instruction += 2
 
 		elif self.opcode == 5 or self.opcode == 6:
