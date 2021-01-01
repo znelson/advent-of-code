@@ -330,7 +330,7 @@ class LightGrid:
 
 	def _check_points(self, topleft, bottomright):
 		if topleft.x > bottomright.x:
-			print 'Unusual rect: {0}, {1}'.format(topleft, bottomright)
+			print('Unusual rect: {0}, {1}'.format(topleft, bottomright))
 
 	def _make_ranges(self, topleft, bottomright):
 		x_range = range(topleft.x, bottomright.x+1)
@@ -411,7 +411,7 @@ for line in lines:
 
 	fn(topleft, bottomright)
 
-print lg.count_on()
+print(lg.count_on())
 
 
 lg = LightGrid(width=1000, height=1000)
@@ -434,4 +434,4 @@ for line in lines:
 
 	fn(topleft, bottomright)
 
-print lg.count_brightness()
+print(lg.count_brightness())

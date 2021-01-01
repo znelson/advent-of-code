@@ -30,7 +30,7 @@ def count_ints(obj, ignore=None):
 
 o = json.loads(data)
 total = count_ints(o)
-print total
+print(total)
 
 not_red_total = count_ints(o, ignore='red')
-print not_red_total
+print(not_red_total)

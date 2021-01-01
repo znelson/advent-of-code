@@ -5,7 +5,7 @@ PeanutButter: capacity -1, durability 3, flavor 0, texture 0, calories 1
 Frosting: capacity 0, durability -1, flavor 4, texture 0, calories 6
 Sugar: capacity -1, durability 0, flavor 0, texture 2, calories 8"""
 
-class RecipeGenerator():
+class RecipeGenerator(object):
 	def __init__(self, count, total):
 		self.count = count
 		self.total = total
@@ -45,7 +45,7 @@ class RecipeGenerator():
 
 		return self.current
 
-	def next(self):
+	def __next__(self):
 		item = self._increment()
 		if item == None:
 			raise StopIteration
@@ -53,7 +53,7 @@ class RecipeGenerator():
 			return tuple(item)
 
 
-class Ingredient():
+class Ingredient(object):
 	def __init__(self, name, capacity, durability, flavor, texture, calories):
 		self.name = name
 		self.capacity = capacity
@@ -65,7 +65,7 @@ class Ingredient():
 	def __repr__(self):
 		return '<Ingredient "{0}", cap {1}, dur {2}, fla {3}, tex {4}, cal {5}'.format(self.name, self.capacity, self.durability, self.flavor, self.texture, self.calories)
 
-class IngredientMixer():
+class IngredientMixer(object):
 	def __init__(self):
 		self.ingredients = []
 
@@ -128,7 +128,7 @@ for line in lines:
 	im.add_ingredient(i)
 
 recipe, score = im.find_optimal_recipe(100)
-print recipe, score
+print(recipe, score)
 
 recipe, score = im.find_optimal_recipe(100, calories=500)
-print recipe, score
+print(recipe, score)

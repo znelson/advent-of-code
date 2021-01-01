@@ -556,7 +556,7 @@ for line in lines:
 	if is_match(current, desired, greater_than=['cats', 'trees'], less_than=['pomeranians', 'goldfish']):
 		part2.append(number)
 
-print part1
-print part2
+print(part1)
+print(part2)
 
 

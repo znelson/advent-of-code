@@ -54,10 +54,10 @@ password = data
 while not test(password):
 	password = increment(password)
 
-print password
+print(password)
 
 password = increment(password)
 while not test(password):
 	password = increment(password)
 
-print password
+print(password)

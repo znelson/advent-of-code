@@ -105,7 +105,7 @@ class DirectedGraph:
 				d += full_circle[i].distance_to(full_circle[i+1].name)
 				d += full_circle[i+1].distance_to(full_circle[i].name)
 
-			# print full_circle, d
+			# print(full_circle, d)
 			return d, d
 		else:
 			shortest = -1
@@ -135,11 +135,11 @@ for line in lines:
 	a, b, d, modifier = words[0], words[10][:-1], int(words[3]), words[2]
 	if modifier == 'lose':
 		d = -d
-	# print a, b, d, modifier
+	# print(a, b, d, modifier)
 	g.add_edge(a, b, d)
 
 shortest, longest = g.traverse()
-print longest
+print(longest)
 
 names = [name for name in g.nodes]
 
@@ -148,4 +148,4 @@ for name in names:
 	g.add_edge("Zach", name, 0)
 
 shortest, longest = g.traverse()
-print longest
+print(longest)

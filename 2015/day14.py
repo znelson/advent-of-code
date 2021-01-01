@@ -109,7 +109,7 @@ def solve_part_1():
 	rh.pass_seconds(2503)
 
 	furthest = rh.get_furthest_reindeer()
-	print furthest
+	print(furthest)
 
 	# should be Cupid at 2696 km
 
@@ -122,7 +122,7 @@ def solve_part_2():
 	rh.pass_seconds(2503)
 
 	best = rh.get_reindeer_with_highest_score()
-	print best
+	print(best)
 
 solve_part_1()
 solve_part_2()

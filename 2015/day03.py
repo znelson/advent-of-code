@@ -23,7 +23,7 @@ for _ in data:
 	adjust_coord(santa, _)
 	visit_coord(santa, visited)
 
-print len(visited)
+print(len(visited))
 
 visited = set()
 santa = [0, 0]
@@ -36,4 +36,4 @@ for _ in data:
 	visit_coord(active_santa, visited)
 	is_santa = not is_santa
 
-print len(visited)
+print(len(visited))

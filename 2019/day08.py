@@ -7,7 +7,7 @@ height = 6
 
 pixels_per_layer = width * height
 
-layer_count = len(data) / pixels_per_layer
+layer_count = int(len(data) / pixels_per_layer)
 layer = 0
 index = 0
 

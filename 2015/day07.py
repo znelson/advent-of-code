@@ -352,7 +352,7 @@ class Wires:
 			elif wire in self.wires:
 				inputs.append(self.wires[wire])
 			else:
-				# print 'Missing wire {0}'.format(wire)
+				# print('Missing wire {0}'.format(wire))
 				return False
 		
 		op = operation.operator
@@ -372,11 +372,11 @@ class Wires:
 		elif op == None:
 			result = inputs[0]
 		else:
-			print 'Unrecognized operation: {0}'.format(operation.operator)
+			print('Unrecognized operation: {0}'.format(operation.operator))
 
 		if result != None:
 			self.wires[operation.output] = result
-			print 'Applied {0} as {1}, {2} wires'.format(operation, result, len(self.wires))
+			print('Applied {0} as {1}, {2} wires'.format(operation, result, len(self.wires)))
 			return True
 
 		return False
@@ -407,7 +407,7 @@ class WireOperation:
 
 		if len(self.tokens) == 3:
 			if self.tokens[1] != '->':
-				print rule
+				print(rule)
 			else:
 				self.inputs = [ _try_string_as_int(self.tokens[0]) ]
 				self.output = self.tokens[2]
@@ -415,7 +415,7 @@ class WireOperation:
 
 		elif len(self.tokens) == 4:
 			if self.tokens[0] != 'NOT' or self.tokens[2] != '->':
-				print rule
+				print(rule)
 			else:
 				self.inputs = [ _try_string_as_int(self.tokens[1]) ]
 				self.output = self.tokens[3]
@@ -423,14 +423,14 @@ class WireOperation:
 
 		elif len(self.tokens) == 5:
 			if self.tokens[3] != '->':
-				print rule
+				print(rule)
 			else:
 				self.inputs = [ _try_string_as_int(self.tokens[0]), _try_string_as_int(self.tokens[2]) ]
 				self.output = self.tokens[4]
 				self.operator = self.tokens[1]
 
 		else:
-			print rule
+			print(rule)
 
 	def is_valid(self):
 		if len(self.inputs) == 0:
@@ -455,7 +455,7 @@ wires = Wires()
 wires.apply(operations)
 
 wire_a = wires.query('a')
-print wire_a
+print(wire_a)
 
 new_rule = '{0} -> b'.format(wire_a)
 wo = WireOperation(new_rule)
@@ -469,4 +469,4 @@ for rule in lines:
 wires = Wires()
 wires.apply(operations)
 
-print wires.query('a')
+print(wires.query('a'))

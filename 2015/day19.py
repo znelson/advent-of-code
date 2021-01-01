@@ -73,12 +73,12 @@ for line in lines:
 	replacements.append(line.split(' => '))
 
 molecules = apply_all_replacements([medicine_molecule], replacements)
-print len(molecules)
+print(len(molecules))
 
 #reductions = [[re.compile(big), small] for small, big in replacements]
 reductions = [[big, small] for small, big in replacements]
 
-print reductions
+print(reductions)
 
 # def apply_all_reductions(molecules, reductions):
 # 	new_molecules = set()
@@ -109,7 +109,10 @@ i = 0
 while 'e' not in molecules:
 	molecules = apply_all_reductions(molecules, reductions)
 	i += 1
-	shortest = min([len(x) for x in molecules])
-	print 'After {0} rounds, {1} molecules, shortest is {2}'.format(i, len(molecules), shortest)
+	if len(molecules) > 0:
+		shortest = min([len(x) for x in molecules])
+		print('After {0} rounds, {1} molecules, shortest is {2}'.format(i, len(molecules), shortest))
+	else:
+		print('After {0} rounds, 0 molecules?!'.format(i))
 
 

@@ -6,14 +6,14 @@ def house_count(house_number):
 	count = 1
 	if house_number > 1:
 		loop_limit = int((house_number+1) / 2.) + 1
-		for i in xrange(2, loop_limit):
+		for i in range(2, loop_limit):
 			if house_number % i == 0:
 				count += i
 		count += house_number
 	return count
 
 for i in range(12):
-	print i, house_count(i)
+	print(i, house_count(i))
 
 
 # 1  = 1 = 1

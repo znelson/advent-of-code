@@ -1010,11 +1010,11 @@ def is_nice(word, verbose=False):
 			if not re.search(r'(ab|cd|pq|xy)', word):
 				return True
 			elif verbose:
-				print 'Disallowed letter combination'
+				print('Disallowed letter combination')
 		elif verbose:
-			print 'No double letters'
+			print('No double letters')
 	elif verbose:
-		print 'Not enough vowels'
+		print('Not enough vowels')
 	return False
 
 nice_set = set()
@@ -1024,7 +1024,7 @@ for line in lines:
 	if is_nice(line):
 		nice_set.add(line)
 
-print len(nice_set)
+print(len(nice_set))
 
 
 
@@ -1040,4 +1040,4 @@ for line in lines:
 	if is_nice_2(line):
 		nice_set.add(line)
 
-print len(nice_set)
+print(len(nice_set))

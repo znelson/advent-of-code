@@ -1017,5 +1017,5 @@ for line in lines:
 
 	ribbon += volume + p1
 
-print paper
-print ribbon
+print(paper)
+print(ribbon)

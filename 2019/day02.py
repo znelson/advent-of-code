@@ -17,8 +17,8 @@ opcode.run_opcodes(tape)
 
 print('{0}, expected {1}'.format(tape[0], test_results[0]))
 
-for a in xrange(0, 100):
-	for b in xrange(0, 100):
+for a in range(0, 100):
+	for b in range(0, 100):
 		tape = initial_tape[:]
 		tape[1] = a
 		tape[2] = b

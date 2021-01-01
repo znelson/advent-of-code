@@ -101,5 +101,5 @@ for line in lines:
 	g.add_edge(a, b, d)
 
 shortest, longest = g.traverse()
-print shortest
-print longest
+print(shortest)
+print(longest)

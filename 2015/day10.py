@@ -21,10 +21,10 @@ s = data
 for i in range(40):
 	s = rewrite(s)
 
-print len(s)
+print(len(s))
 
 s = data
 for i in range(50):
 	s = rewrite(s)
 
-print len(s)
+print(len(s))

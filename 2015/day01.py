@@ -9,7 +9,7 @@ for _ in a:
 	elif _ == ')':
 			floor -= 1
 
-print floor
+print(floor)
 
 floor = 0
 index = 0
@@ -22,4 +22,4 @@ for _ in a:
 	if floor < 0:
 			break
 
-print index
+print(index)

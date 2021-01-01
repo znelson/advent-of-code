@@ -214,8 +214,8 @@ class LightGrid:
 
 lg = LightGrid(data)
 lg.step(100)
-print lg.count_on()
+print(lg.count_on())
 
 lg = LightGrid(data, hot_corners=True)
 lg.step(100)
-print lg.count_on()
+print(lg.count_on())

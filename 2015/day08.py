@@ -309,7 +309,7 @@ memory = 0
 lines = data.split('\n')
 for line in lines:
 	code += len(line)
-	# print line
+	# print(line)
 
 	i = 0
 	while i < len(line):
@@ -319,19 +319,19 @@ for line in lines:
 				# \\ = 1 character
 				memory += 1
 				i += 2
-				# print code, memory, '"{0}"'.format(line[i-2:i])
+				# print(code, memory, '"{0}"'.format(line[i-2:i]))
 
 			elif line[i+1] == 'x':
 				# \x12 = 1 character
 				memory += 1
 				i += 4
-				# print code, memory, '"{0}"'.format(line[i-4:i])
+				# print(code, memory, '"{0}"'.format(line[i-4:i]))
 
 			elif line[i+1] == '"':
 				# \" = 1 character
 				memory += 1
 				i += 2
-				# print code, memory, '"{0}"'.format(line[i-2:i])
+				# print(code, memory, '"{0}"'.format(line[i-2:i]))
 
 			continue
 
@@ -342,10 +342,10 @@ for line in lines:
 		
 		memory += 1
 		i += 1
-		# print code, memory, '"{0}"'.format(line[i-1])
+		# print(code, memory, '"{0}"'.format(line[i-1]))
 
-print 'Code: {0}, Memory: {1}'.format(code, memory)
-print code - memory
+print('Code: {0}, Memory: {1}'.format(code, memory))
+print(code - memory)
 
 encoded = 0
 
@@ -362,6 +362,6 @@ for line in lines:
 		else:
 			encoded += 1
 
-print 'Encoded: {0}'.format(encoded)
-print encoded - code
+print('Encoded: {0}'.format(encoded))
+print(encoded - code)
 
