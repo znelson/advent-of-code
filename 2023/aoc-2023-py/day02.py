@@ -1,20 +1,15 @@
 #!/usr/bin/env python3
 
-# part 1
 total = 0
-
-# part 2
 power = 0
 
 with open('day02.txt', 'r') as f:
 	for line in f.readlines():
-		(game, line) = line.split(': ')
-		line = line.strip()
+		(game, line) = line.strip().split(': ')
 		game = int(game.split(' ')[1])
 		limits = {}
 		for handful in line.split('; '):
-			dice = handful.split(', ')
-			for die in dice:
+			for die in handful.split(', '):
 				(count, color) = die.split(' ')
 				count = int(count)
 				if color not in limits or count > limits[color]:
