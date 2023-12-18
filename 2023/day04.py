@@ -44,8 +44,8 @@ with open('day04.txt', 'r') as f:
         for number in numbers:
             if number in winners:
                 wins += 1
-        this_count = counts[i]
         if wins > 0:
+            this_count = counts[i]
             for j in range(1, wins+1):
                 counts[i+j] += this_count
     for i, c in counts.items():
