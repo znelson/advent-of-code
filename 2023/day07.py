@@ -15,7 +15,9 @@ card_nums = {
 }
 
 
-def card_to_num(card):
+def card_to_num(card, overrides={}):
+    if card in overrides:
+        return overrides[card]
     if card in card_nums:
         return card_nums[card]
     return int(card)
@@ -86,11 +88,13 @@ class Hand(object):
         return self.rank
 
 
-def hand_compare(one, two):
+def hand_compare(one, two, overrides=None):
+    if overrides is None:
+        overrides = {}
     if one.rank != two.rank:
         return 1 if one.rank > two.rank else -1
     for index in range(len(one.cards)):
-        num_one, num_two = card_to_num(one.cards[index]), card_to_num(two.cards[index])
+        num_one, num_two = card_to_num(one.cards[index], overrides=overrides), card_to_num(two.cards[index], overrides=overrides)
         if num_one != num_two:
             return 1 if num_one > num_two else -1
     return 0
@@ -123,21 +127,10 @@ for index in range(len(hands)):
 
 print(f'Part 1: {total}')
 
-def card_to_num_2(card):
-    if card == 'J':
-        return 1
-    if card in card_nums:
-        return card_nums[card]
-    return int(card)
 
 def hand_compare_2(one, two):
-    if one.rank != two.rank:
-        return 1 if one.rank > two.rank else -1
-    for index in range(len(one.cards)):
-        num_one, num_two = card_to_num_2(one.cards[index]), card_to_num_2(two.cards[index])
-        if num_one != num_two:
-            return 1 if num_one > num_two else -1
-    return 0
+    return hand_compare(one, two, overrides={'J': 1})
+
 
 hands.sort(key=functools.cmp_to_key(hand_compare_2))
 
